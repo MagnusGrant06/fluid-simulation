@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bd0wdtoa4h004"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tft6q"]
+
+[node name="FluidCube" type="MeshInstance3D" unique_id=856857340]
+mesh = SubResource("BoxMesh_tft6q")
