@@ -4,8 +4,36 @@ uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 const float air_index = 1.0f;
 const float water_index = 1.33f;
 
+//calculate specific point of this vertex on a wave
+float calculate_phase(vec3 vertex, float wavelength, vec2 direction, float t){
+	float k = (2.0 * PI) / wavelength;
+	float angular_freq = sqrt(0.3 * k);
+	float phase = (k * (direction.x * vertex.x + direction.y * vertex.z)) - (angular_freq * t);
+	
+	return phase;
+}
+
+//calculate actual offset of point from wave to real vertex position
+vec3 calculate_offset(vec3 vertex, float amplitude, vec2 direction, float steepness, float wavelength, float t){
+	float phase = calculate_phase(vertex, wavelength, direction, t);
+	float dx = (steepness * amplitude * direction.x * cos(phase));
+	float dy = amplitude * sin(phase);
+	float dz = (steepness * amplitude * direction.y * cos(phase));
+	
+	return vec3(dx,dy,dz);
+}
+
 void vertex() {
 	// Called for every vertex the material is visible on.
+	
+	//calculate multiple waves in different directions to create realistic waves
+	vec3 d1 = calculate_offset(VERTEX, 0.5, vec2(1,0), 0.8, 6.0, TIME);
+	vec3 d2 = calculate_offset(VERTEX, 0.8, vec2(0,1), 0.5, 10.0, TIME);
+	vec3 d3 = calculate_offset(VERTEX, 0.3, vec2(0.5,0.5), 1.0, 5.0, TIME);
+	
+	vec3 d = d1 + d2 + d3;
+	
+	VERTEX = vec3(VERTEX.x + d.x, d.y, VERTEX.z + d.z);
 }
 
 void fragment() {
