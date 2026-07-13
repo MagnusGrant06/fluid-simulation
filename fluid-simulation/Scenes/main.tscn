@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://c4mc3walo5kva"]
+
+[ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_cube.tscn" id="1_bo1nx"]
+[ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
+[ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_8gbba"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xrqee"]
+panorama = ExtResource("3_8gbba")
+
+[sub_resource type="Sky" id="Sky_k0t4d"]
+sky_material = SubResource("PanoramaSkyMaterial_xrqee")
+
+[sub_resource type="Environment" id="Environment_vfd82"]
+background_mode = 2
+sky = SubResource("Sky_k0t4d")
+
+[sub_resource type="BoxMesh" id="BoxMesh_vfd82"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_k0t4d"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vfd82"]
+
+[node name="Main" type="Node3D" unique_id=2027078809]
+
+[node name="FluidCube" parent="." unique_id=856857340 instance=ExtResource("1_bo1nx")]
+mesh = SubResource("SphereMesh_8gbba")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=448676736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0387135)
+script = ExtResource("2_8gbba")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=256479540]
+transform = Transform3D(0.9374802, -0.22751148, -0.26338065, 0, -0.756757, 0.6536961, -0.34803852, -0.6128271, -0.70944476, -2.2804346, 3.6154993, -2.8711805)
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1634736096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10935, 4.619152, 3.5866082)
+light_energy = 6.333
+omni_range = 9.259
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=69848828]
+environment = SubResource("Environment_vfd82")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1485384509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.0020704)
+mesh = SubResource("BoxMesh_vfd82")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1546694336]
+transform = Transform3D(0.778554, -0.52465636, -0.34436813, 0.5908103, 0.7978006, 0.12023916, 0.21165287, -0.29706892, 0.93110317, 2.950289, 0, 0)
+mesh = SubResource("TorusMesh_k0t4d")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=248369626]
+transform = Transform3D(0.6905718, 0.72326386, 0, -0.72326386, 0.6905718, 0, 0, 0, 1, 0.39646864, -1.370295, 0)
+mesh = SubResource("CylinderMesh_vfd82")
