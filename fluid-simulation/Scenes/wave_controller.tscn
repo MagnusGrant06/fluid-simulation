@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bslun5b34sjgb"]
+
+[ext_resource type="Script" uid="uid://dfwg4imilrmxw" path="res://Code/Scripts/wave_controller.gd" id="1_vy0m4"]
+
+[node name="WaveController" type="Control" unique_id=2136284873]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vy0m4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1504263713]
+layout_mode = 0
+offset_right = 177.0
+offset_bottom = 325.0
+
+[node name="Amplitude" type="Label" parent="VBoxContainer" unique_id=1129056196]
+layout_mode = 2
+text = "Adjust Wave Amplitude"
+
+[node name="AmplitudeSlider" type="HSlider" parent="VBoxContainer" unique_id=1881841220]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Wave Steepness" type="Label" parent="VBoxContainer" unique_id=144088321]
+layout_mode = 2
+text = "Adjust Wave Steepness"
+
+[node name="SteepnessSlider" type="HSlider" parent="VBoxContainer" unique_id=1109721886]
+layout_mode = 2
+max_value = 1.5
+step = 0.01
+value = 0.75
+
+[node name="Wavelength" type="Label" parent="VBoxContainer" unique_id=680343159]
+layout_mode = 2
+text = "Adjust Wavelength"
+
+[node name="WavelengthSlider" type="HSlider" parent="VBoxContainer" unique_id=1278807354]
+layout_mode = 2
+max_value = 15.0
+step = 0.1
+value = 7.5

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_cube.tscn" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_8gbba"]
 size = Vector2(10, 10)
@@ -11,6 +12,7 @@ subdivide_depth = 50
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xrqee"]
 panorama = ExtResource("3_8gbba")
+energy_multiplier = 0.3
 
 [sub_resource type="Sky" id="Sky_k0t4d"]
 sky_material = SubResource("PanoramaSkyMaterial_xrqee")
@@ -40,7 +42,6 @@ shadow_enabled = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1634736096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10935, 4.619152, 3.5866082)
-visible = false
 light_energy = 6.333
 omni_range = 9.259
 
@@ -58,3 +59,5 @@ mesh = SubResource("TorusMesh_k0t4d")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=248369626]
 transform = Transform3D(0.6905718, 0.72326386, 0, -0.72326386, 0.6905718, 0, 0, 0, 1, 0.39646864, -1.370295, 0)
 mesh = SubResource("CylinderMesh_vfd82")
+
+[node name="WaveController" parent="." unique_id=2136284873 instance=ExtResource("4_jjvhh")]

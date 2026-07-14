@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bd0wdtoa4h004"]
 
-[ext_resource type="Script" uid="uid://bdfi3qtlnt7o" path="res://Scenes/fluid_cube.gd" id="1_0vdsb"]
+[ext_resource type="Script" uid="uid://bdfi3qtlnt7o" path="res://Code/Scripts/fluid_cube.gd" id="1_0vdsb"]
 [ext_resource type="Shader" uid="uid://cy6dcpy0g2vr5" path="res://Code/Shaders/water.gdshader" id="1_xrqee"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_bo1nx"]
@@ -8,6 +8,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vfd82"]
 render_priority = 0
 shader = ExtResource("1_xrqee")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
 
 [node name="FluidCube" type="MeshInstance3D" unique_id=856857340]
 mesh = SubResource("SphereMesh_bo1nx")

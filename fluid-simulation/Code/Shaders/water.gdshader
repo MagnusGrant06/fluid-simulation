@@ -1,6 +1,12 @@
 shader_type spatial;
+
 uniform samplerCube sky_texture;
 uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+
+uniform float wave_length = 7.5;
+uniform float wave_amplitude = 0.5;
+uniform float wave_steepness = 0.75;
+
 const float air_index = 1.0f;
 const float water_index = 1.33f;
 
@@ -27,9 +33,9 @@ void vertex() {
 	// Called for every vertex the material is visible on.
 	
 	//calculate multiple waves in different directions to create realistic waves
-	vec3 d1 = calculate_offset(VERTEX, 0.5, vec2(1,0), 0.8, 6.0, TIME);
-	vec3 d2 = calculate_offset(VERTEX, 0.8, vec2(0,1), 0.5, 10.0, TIME);
-	vec3 d3 = calculate_offset(VERTEX, 0.3, vec2(0.5,0.5), 1.0, 5.0, TIME);
+	vec3 d1 = calculate_offset(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, TIME);
+	vec3 d2 = calculate_offset(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, TIME);
+	vec3 d3 = calculate_offset(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, TIME);
 	
 	vec3 d = d1 + d2 + d3;
 	
@@ -40,19 +46,26 @@ void fragment() {
 	// Called for every pixel the material is visible on.
 	// r(th) = R(0) + (1-R0)(1-cos(th)^5
 	//where r(0) = ((n1-n2)/(n1+n2))^2 where n1 is assumed to be 1 and n2 is ~= 1.33?
+	
+	//use schlicks approximation to estimate reflectiveness of water depending on view angle
 	float r0 = pow((air_index-water_index) / (air_index + water_index), 2);
 	
 	float cos_theta = clamp( dot(normalize(VIEW),normalize(NORMAL)), 0.0, 1.0);
 	
 	float R = r0 + (1.0 - r0) * pow( (1.0-cos_theta) ,5);
 	
+	//sample refraction from sorrounding scene
 	vec3 refraction_color = texture(screen_texture, SCREEN_UV + vec2(0.01,0.01)).rgb;
 	
+	//sample reflection from skybox
 	vec3 reflect_dir = reflect(-VIEW, NORMAL);
 	vec3 reflection_color = texture(sky_texture, reflect_dir).rgb;
 	
 	vec3 final_color = mix(refraction_color, reflection_color, R);
 	ALBEDO = final_color;
+	
+	SPECULAR = 0.5;
+	ROUGHNESS = 0.05;
 }
 
 //void light() {
