@@ -1,6 +1,7 @@
 shader_type spatial;
 
-uniform samplerCube sky_texture;
+render_mode blend_mix;
+uniform sampler2D sky_texture;
 uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 
 uniform float wave_length = 7.5;
@@ -41,6 +42,13 @@ vec3 calculate_normal(vec3 vertex, float amplitude, vec2 direction, float steepn
 	return vec3(dx, dy, dz);
 }
 
+vec2 direction_to_equirect_uv(vec3 dir) {
+    dir = normalize(dir);
+    float u = atan(dir.z, dir.x) / (2.0 * PI) + 0.5;
+    float v = asin(dir.y) / PI + 0.5;
+    return vec2(u, v);
+}
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 	
@@ -48,14 +56,10 @@ void vertex() {
 	vec3 d1 = calculate_offset(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, TIME);
 	vec3 d2 = calculate_offset(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, TIME);
 	vec3 d3 = calculate_offset(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, TIME);
-	//vec3 d4 = calculate_offset(VERTEX, wave_amplitude*0.25, vec2(-0.7,0.3), wave_steepness*2.0, wave_length*0.68, TIME);
-	//vec3 d5 = calculate_offset(VERTEX, wave_amplitude*1.24, vec2(0.6,0.9), wave_steepness*1.78, wave_length*1.34, TIME);
 	
 	vec3 n1 = calculate_normal(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, TIME);
 	vec3 n2 = calculate_normal(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, TIME);
 	vec3 n3 = calculate_normal(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, TIME);
-	//vec3 n4 = calculate_normal(VERTEX, wave_amplitude*0.25, vec2(-0.7,0.3), wave_steepness*2.0, wave_length*0.68, TIME);
-	//vec3 n5 = calculate_normal(VERTEX, wave_amplitude*1.24, vec2(0.6,0.9), wave_steepness*1.78, wave_length*1.34, TIME);
 	
 	vec3 d = d1 + d2 + d3;
 	vec3 n = normalize(vec3(0,1,0) + (n1 + n2 + n3));
@@ -81,11 +85,15 @@ void fragment() {
 	
 	//sample reflection from skybox
 	vec3 reflect_dir = reflect(-VIEW, NORMAL);
-	vec3 reflection_color = texture(sky_texture, reflect_dir).rgb;
+	vec2 uv = direction_to_equirect_uv(reflect_dir);
+	vec3 reflection_color = texture(sky_texture, uv).rgb;
 	
+	//mix refraction and reflection parts with a bit of flat blue color for more believable color
 	vec3 final_color = mix(refraction_color, reflection_color, R);
-	//ALBEDO = vec3(0.5) + 0.5 * NORMAL;
+	final_color *= vec3(0.6, 0.85, 1.5);
+
 	ALBEDO = final_color;
+	//ALPHA = 0.8;
 	SPECULAR = 0.5;
 	ROUGHNESS = 0.05;
 }

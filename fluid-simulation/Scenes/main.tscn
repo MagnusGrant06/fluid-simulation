@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4mc3walo5kva"]
 
-[ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_cube.tscn" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_surface.tscn" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
@@ -49,7 +49,7 @@ omni_range = 9.259
 environment = SubResource("Environment_vfd82")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1485384509]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.0020704)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20656705, -4.0020704)
 mesh = SubResource("BoxMesh_vfd82")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1546694336]
