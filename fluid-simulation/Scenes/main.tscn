@@ -5,9 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_8gbba"]
-size = Vector2(10, 10)
+[sub_resource type="BoxMesh" id="BoxMesh_jjvhh"]
+size = Vector3(10, 0.01, 10)
 subdivide_width = 50
+subdivide_height = 50
 subdivide_depth = 50
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xrqee"]
@@ -27,10 +28,23 @@ sky = SubResource("Sky_k0t4d")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vfd82"]
 
+[sub_resource type="QuadMesh" id="QuadMesh_k0t4d"]
+size = Vector2(15, 15)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vfd82"]
+height = 5.854
+
+[sub_resource type="TorusMesh" id="TorusMesh_vfd82"]
+inner_radius = 0.087
+outer_radius = 1.71
+
+[sub_resource type="PrismMesh" id="PrismMesh_vfd82"]
+
 [node name="Main" type="Node3D" unique_id=2027078809]
 
 [node name="FluidCube" parent="." unique_id=856857340 instance=ExtResource("1_bo1nx")]
-mesh = SubResource("PlaneMesh_8gbba")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.003465891, -1.1920929e-07, -0.0025782585)
+mesh = SubResource("BoxMesh_jjvhh")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=448676736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0387135)
@@ -48,16 +62,32 @@ omni_range = 9.259
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=69848828]
 environment = SubResource("Environment_vfd82")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1485384509]
+[node name="FloatingObj1" type="MeshInstance3D" parent="." unique_id=1485384509]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20656705, -4.0020704)
 mesh = SubResource("BoxMesh_vfd82")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1546694336]
+[node name="FloatingObj2" type="MeshInstance3D" parent="." unique_id=1546694336]
 transform = Transform3D(0.778554, -0.52465636, -0.34436813, 0.5908103, 0.7978006, 0.12023916, 0.21165287, -0.29706892, 0.93110317, 2.950289, 0, 0)
 mesh = SubResource("TorusMesh_k0t4d")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=248369626]
+[node name="FloatingObj3" type="MeshInstance3D" parent="." unique_id=248369626]
 transform = Transform3D(0.6905718, 0.72326386, 0, -0.72326386, 0.6905718, 0, 0, 0, 1, 0.39646864, -1.370295, 0)
 mesh = SubResource("CylinderMesh_vfd82")
 
 [node name="WaveController" parent="." unique_id=2136284873 instance=ExtResource("4_jjvhh")]
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=713754668]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -5.4139047, 0)
+mesh = SubResource("QuadMesh_k0t4d")
+
+[node name="GroundObj1" type="MeshInstance3D" parent="Ground" unique_id=1565312137]
+transform = Transform3D(0.89159447, 0.452835, 1.9794044e-08, -0.45272982, 0.8913874, -0.021549908, -0.009758567, 0.019213766, 0.9997678, -2.0561733, -4.6204883e-07, -0.33831644)
+mesh = SubResource("SphereMesh_vfd82")
+
+[node name="GroundObj2" type="MeshInstance3D" parent="Ground" unique_id=2056805541]
+transform = Transform3D(1, 0, 0, 0, -0.14874534, -0.9888756, 0, 0.9888756, -0.14874534, 2.767057, -2.292716, -0.6587138)
+mesh = SubResource("TorusMesh_vfd82")
+
+[node name="GroundObj3" type="MeshInstance3D" parent="Ground" unique_id=1358372457]
+transform = Transform3D(1, 0, 0, 0, 0.31822735, -0.94801444, 0, 0.94801444, 0.31822735, 1.0952313, 1.8751601, 0.4654379)
+mesh = SubResource("PrismMesh_vfd82")

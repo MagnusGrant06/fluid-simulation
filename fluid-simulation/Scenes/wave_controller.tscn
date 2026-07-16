@@ -45,3 +45,13 @@ layout_mode = 2
 max_value = 15.0
 step = 0.1
 value = 7.5
+
+[node name="WaterVisibility" type="Label" parent="VBoxContainer" unique_id=751077649]
+layout_mode = 2
+text = "Adjust Water Visibility"
+
+[node name="VisibilitySlider" type="HSlider" parent="VBoxContainer" unique_id=803292645]
+layout_mode = 2
+max_value = 0.5
+step = 0.01
+value = 0.25

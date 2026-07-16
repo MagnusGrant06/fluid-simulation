@@ -1,16 +1,31 @@
 shader_type spatial;
 
-render_mode blend_mix;
 uniform sampler2D sky_texture;
 uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D depth_texture : hint_depth_texture, filter_linear_mipmap;
 
 uniform float wave_length = 7.5;
 uniform float wave_amplitude = 0.5;
 uniform float wave_steepness = 0.75;
+uniform float visibility = 0.25;
 
 const float air_index = 1.0f;
 const float water_index = 1.33f;
 
+//use depth buffer to calculate distance from surface to objects to add light absorption
+float calculate_pixel_depth(vec2 uv, vec3 vertex, mat4 inverse_proj){
+	float raw_depth = texture(depth_texture, uv).r;
+	
+	//convert non-linear depth buffer value to usable world space position
+	vec3 ndc = vec3(uv * 2.0 - 1.0, raw_depth);
+	vec4 view_pos = inverse_proj * vec4(ndc,1.0);
+	view_pos.xyz /= view_pos.w;
+	
+	float water_surface = -vertex.z;
+	float scene_depth = -view_pos.z;
+	
+	return max(scene_depth - water_surface, 0.0);
+}
 //calculate specific point of this vertex on a wave
 float calculate_phase(vec3 vertex, float wavelength, vec2 direction, float t){
 	float k = (2.0 * PI) / wavelength;
@@ -66,6 +81,7 @@ void vertex() {
 	
 	VERTEX = vec3(VERTEX.x + d.x, d.y, VERTEX.z + d.z);
 	NORMAL = n;
+
 }
 
 void fragment() {
@@ -88,12 +104,14 @@ void fragment() {
 	vec2 uv = direction_to_equirect_uv(reflect_dir);
 	vec3 reflection_color = texture(sky_texture, uv).rgb;
 	
+	//approximate light falloff using Beer-Lambert law
+	float water_distance = calculate_pixel_depth(SCREEN_UV - NORMAL.xy * 0.03, VERTEX, INV_PROJECTION_MATRIX);
+	float transmittance = exp(-water_distance * visibility);
 	//mix refraction and reflection parts with a bit of flat blue color for more believable color
-	vec3 final_color = mix(refraction_color, reflection_color, R);
-	final_color *= vec3(0.6, 0.85, 1.5);
-
-	ALBEDO = final_color;
-	//ALPHA = 0.8;
+	vec3 schlick_color = mix(refraction_color, reflection_color, R);
+	vec3 final_color = mix(schlick_color,vec3(0.6, 0.85, 1.5), clamp(1.0 - transmittance,0.0,1.0));
+	
+	ALBEDO = final_color / 2.0;
 	SPECULAR = 0.5;
 	ROUGHNESS = 0.05;
 }
