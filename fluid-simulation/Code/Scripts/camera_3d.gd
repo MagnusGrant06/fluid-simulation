@@ -1,5 +1,6 @@
 extends Camera3D
 
+@onready var fluid = $"../../Fluid"
 
 @export var target: Vector3 = Vector3.ZERO
 @export var distance: float = 2.0
@@ -10,6 +11,8 @@ extends Camera3D
 var _yaw: float = 0.0
 var _pitch: float = 0.0
 var _is_orbiting: bool = false
+
+var underwater: bool = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -39,5 +42,10 @@ func _update_camera() -> void:
 		cos(pitch_rad) * cos(yaw_rad)
 	) * distance
 	
+	get_parent().global_position = target + offset
 	global_position = target + offset
 	look_at(target, Vector3.UP)
+
+func _process(_delta: float) -> void:
+	underwater = fluid.is_under_water(global_transform.origin)
+	print(underwater)

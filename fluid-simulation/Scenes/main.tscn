@@ -1,15 +1,12 @@
 [gd_scene format=3 uid="uid://c4mc3walo5kva"]
 
-[ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_surface.tscn" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://cyck2qg52o3g2" path="res://Scenes/fluid.tscn" id="1_jjvhh"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_jjvhh"]
-size = Vector3(10, 0.01, 10)
-subdivide_width = 50
-subdivide_height = 50
-subdivide_depth = 50
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vfd82"]
+height = 1.0
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xrqee"]
 panorama = ExtResource("3_8gbba")
@@ -21,6 +18,7 @@ sky_material = SubResource("PanoramaSkyMaterial_xrqee")
 [sub_resource type="Environment" id="Environment_vfd82"]
 background_mode = 2
 sky = SubResource("Sky_k0t4d")
+fog_density = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_vfd82"]
 
@@ -42,13 +40,19 @@ outer_radius = 1.71
 
 [node name="Main" type="Node3D" unique_id=2027078809]
 
-[node name="FluidCube" parent="." unique_id=856857340 instance=ExtResource("1_bo1nx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.003465891, -1.1920929e-07, -0.0025782585)
-mesh = SubResource("BoxMesh_jjvhh")
+[node name="Fluid" parent="." unique_id=199363850 instance=ExtResource("1_jjvhh")]
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=448676736]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0387135)
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1234586936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.537152, 1.9344766)
+motion_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D" unique_id=448676736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5100246, 0)
 script = ExtResource("2_8gbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1068153518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4903534, 0)
+shape = SubResource("CapsuleShape3D_vfd82")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=256479540]
 transform = Transform3D(0.9374802, -0.22751148, -0.26338065, 0, -0.756757, 0.6536961, -0.34803852, -0.6128271, -0.70944476, -2.2804346, 3.6154993, -2.8711805)

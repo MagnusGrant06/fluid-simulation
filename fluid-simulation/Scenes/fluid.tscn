@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cyck2qg52o3g2"]
+
+[ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_surface.tscn" id="1_qr0y5"]
+[ext_resource type="Script" uid="uid://bdfi3qtlnt7o" path="res://Code/Scripts/fluid.gd" id="1_rcw30"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vfd82"]
+size = Vector3(10, 10, 10)
+
+[node name="Fluid" type="Node3D" unique_id=199363850]
+script = ExtResource("1_rcw30")
+
+[node name="FluidSurface" parent="." unique_id=856857340 instance=ExtResource("1_qr0y5")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=468638746]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=632795182]
+shape = SubResource("BoxShape3D_vfd82")

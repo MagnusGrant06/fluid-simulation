@@ -4,7 +4,7 @@ extends Control
 @onready var steep_slider : HSlider = $VBoxContainer/SteepnessSlider
 @onready var wavlen_slider : HSlider = $VBoxContainer/WavelengthSlider
 @onready var vis_slider : HSlider = $VBoxContainer/VisibilitySlider
-@onready var fluid : MeshInstance3D = $"../FluidCube"
+@onready var fluid : Node3D = $"../Fluid"
 var fluid_material : ShaderMaterial
 
 func _ready() -> void:
@@ -13,16 +13,19 @@ func _ready() -> void:
 	wavlen_slider.connect("value_changed", _on_wavelength_changed)
 	vis_slider.connect("value_changed", _on_visibility_changed)
 	
-	fluid_material = fluid.get_active_material(0)
+	fluid_material = fluid.surface.get_active_material(0)
 
 func _on_amplitude_changed(value : float):
 	fluid_material.set_shader_parameter("wave_amplitude", value)
+	fluid.amplitude = value
 
 func _on_steepness_changed(value : float):
 	fluid_material.set_shader_parameter("wave_steepness", value)
+	fluid.steepness = value
 
 func _on_wavelength_changed(value : float):
 	fluid_material.set_shader_parameter("wave_length", value)
+	fluid.wavelength = value
 
 func _on_visibility_changed(value : float):
 	fluid_material.set_shader_parameter("visibility",value);
