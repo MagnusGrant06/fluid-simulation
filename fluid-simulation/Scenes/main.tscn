@@ -39,6 +39,15 @@ fog_density = 0.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vfd82"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynf5e"]
+render_priority = 0
+shader = ExtResource("7_6bp64")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/time = 0.0
+shader_parameter/light_direction = Vector3(0, 0, 0)
+
 [sub_resource type="QuadMesh" id="QuadMesh_k0t4d"]
 size = Vector2(10, 10)
 subdivide_width = 50
@@ -56,11 +65,38 @@ shader_parameter/light_direction = Vector3(0, 0, 0)
 [sub_resource type="SphereMesh" id="SphereMesh_vfd82"]
 height = 5.854
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hhhfx"]
+render_priority = 0
+shader = ExtResource("7_6bp64")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/time = 0.0
+shader_parameter/light_direction = Vector3(0, 0, 0)
+
 [sub_resource type="TorusMesh" id="TorusMesh_vfd82"]
 inner_radius = 0.087
 outer_radius = 1.71
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hptm8"]
+render_priority = 0
+shader = ExtResource("7_6bp64")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/time = 0.0
+shader_parameter/light_direction = Vector3(0, 0, 0)
+
 [sub_resource type="PrismMesh" id="PrismMesh_vfd82"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_344ge"]
+render_priority = 0
+shader = ExtResource("7_6bp64")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/time = 0.0
+shader_parameter/light_direction = Vector3(0, 0, 0)
 
 [node name="Main" type="Node3D" unique_id=2027078809]
 
@@ -107,6 +143,7 @@ mesh = SubResource("TorusMesh_k0t4d")
 [node name="FloatingObj3" type="MeshInstance3D" parent="." unique_id=248369626]
 transform = Transform3D(0.6905718, 0.72326386, 0, -0.72326386, 0.6905718, 0, 0, 0, 1, 0.39646864, -1.370295, 0)
 mesh = SubResource("CylinderMesh_vfd82")
+surface_material_override/0 = SubResource("ShaderMaterial_ynf5e")
 
 [node name="WaveController" parent="." unique_id=2136284873 instance=ExtResource("4_jjvhh")]
 
@@ -119,11 +156,14 @@ script = ExtResource("8_344ge")
 [node name="GroundObj1" type="MeshInstance3D" parent="Ground" unique_id=1565312137]
 transform = Transform3D(0.89159447, 0.452835, 1.9794044e-08, -0.45272982, 0.8913874, -0.021549908, -0.009758567, 0.019213766, 0.9997678, -2.0561733, -4.6204883e-07, -0.33831644)
 mesh = SubResource("SphereMesh_vfd82")
+surface_material_override/0 = SubResource("ShaderMaterial_hhhfx")
 
 [node name="GroundObj2" type="MeshInstance3D" parent="Ground" unique_id=2056805541]
 transform = Transform3D(1, 0, 0, 0, -0.14874534, -0.9888756, 0, 0.9888756, -0.14874534, 2.767057, -2.292716, -0.6587138)
 mesh = SubResource("TorusMesh_vfd82")
+surface_material_override/0 = SubResource("ShaderMaterial_hptm8")
 
 [node name="GroundObj3" type="MeshInstance3D" parent="Ground" unique_id=1358372457]
 transform = Transform3D(1, 0, 0, 0, 0.31822735, -0.94801444, 0, 0.94801444, 0.31822735, 1.0952313, 1.8751601, 0.4654379)
 mesh = SubResource("PrismMesh_vfd82")
+surface_material_override/0 = SubResource("ShaderMaterial_344ge")

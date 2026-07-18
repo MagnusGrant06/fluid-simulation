@@ -2,6 +2,7 @@ shader_type spatial;
 render_mode unshaded, depth_test_disabled;
 
 uniform sampler2D depth_texture : hint_depth_texture, filter_linear_mipmap;
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 
 uniform float visibility = 0.05;
 //use depth buffer to calculate distance from canmera to objects to add light absorption
@@ -28,8 +29,11 @@ void fragment() {
 	float depth = calculate_pixel_depth(SCREEN_UV, VERTEX, INV_PROJECTION_MATRIX);
 	float transmittance = exp(-depth * visibility);
 	
-	ALBEDO = vec3(0.6, 0.85, 1.5) * clamp(1.0 - transmittance,0.0,1.0);
-	ALBEDO /= 2.0;
+	vec3 ocean_color = vec3(0.2588, 0.4537, 0.9608);
+	float depth_factor = clamp(1.0 - transmittance,0.0,1.0);
+	vec3 screen_color = texture(screen_texture, SCREEN_UV).rgb;
+	
+	ALBEDO =  mix(screen_color, ocean_color, depth_factor);
 }
 
 //void light() {
