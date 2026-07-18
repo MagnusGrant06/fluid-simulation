@@ -8,36 +8,39 @@ extends Node
 var wavelength : float = 7.5
 var amplitude : float = 0.5
 var steepness : float = 0.75
+var wave_time : float = 0.0
 
 var within_water_area : bool = false
 
 func _ready() -> void:
 	var material: ShaderMaterial = surface.get_active_material(0)
 	material.set_shader_parameter("sky_texture", environment.environment.sky.sky_material.panorama)
-	
 	surface_area.connect("body_entered", _on_surface_area_entered)
 	surface_area.connect("body_exited", _on_surface_area_exited)
 
-func _on_surface_area_entered(body : Node3D):
-	print("entered")
+#manually keep track of time so its consistent between script and shader
+func _process(delta: float) -> void:
+	wave_time += delta
+	var material: ShaderMaterial = surface.get_active_material(0)
+	material.set_shader_parameter("time", wave_time)
+
+func _on_surface_area_entered(_body : Node3D):
 	within_water_area = true
 
-func _on_surface_area_exited(body : Node3D):
-	#if(body is not Camera3D): return
-	print("exited")
+func _on_surface_area_exited(_body : Node3D):
 	within_water_area = false
 
 #check if given point is above or below water surface taking into account waves
 func is_under_water(point : Vector3) -> bool:
 	if(!within_water_area): return false
-	return point.y < get_current_wave_height(point, wavelength, amplitude, steepness)
+	return point.y < get_current_wave_height(point, amplitude, steepness, wavelength)
 	
 
 #replicated GDShader code for waves to get waveheight at current given position to check if underwater
 func calculate_phase(vertex : Vector3,wave_length : float, direction : Vector2) -> float:
 	var k : float = (2.0 * PI) / wave_length
 	var angular_freq : float = sqrt(0.3*k)
-	var phase : float = (k * (direction.x * vertex.x + direction.y * vertex.z)) - (angular_freq * Time.get_ticks_msec() / 1000.0)
+	var phase : float = (k * (direction.x * vertex.x + direction.y * vertex.z)) - (angular_freq * wave_time)
 	return phase
 
 func calculate_wave_offset(position : Vector3, wave_amplitude : float, direction : Vector2, wave_steepness : float, wave_length : float) -> Vector3:

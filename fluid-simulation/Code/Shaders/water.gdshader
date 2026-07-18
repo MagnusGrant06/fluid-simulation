@@ -1,3 +1,4 @@
+
 shader_type spatial;
 
 uniform sampler2D sky_texture;
@@ -8,6 +9,8 @@ uniform float wave_length = 7.5;
 uniform float wave_amplitude = 0.5;
 uniform float wave_steepness = 0.75;
 uniform float visibility = 0.25;
+
+uniform float time = 0.0;
 
 const float air_index = 1.0f;
 const float water_index = 1.33f;
@@ -68,18 +71,18 @@ void vertex() {
 	// Called for every vertex the material is visible on.
 	
 	//calculate multiple waves in different directions to create realistic waves
-	vec3 d1 = calculate_offset(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, TIME);
-	vec3 d2 = calculate_offset(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, TIME);
-	vec3 d3 = calculate_offset(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, TIME);
+	vec3 d1 = calculate_offset(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, time);
+	vec3 d2 = calculate_offset(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, time);
+	vec3 d3 = calculate_offset(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, time);
 	
-	vec3 n1 = calculate_normal(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, TIME);
-	vec3 n2 = calculate_normal(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, TIME);
-	vec3 n3 = calculate_normal(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, TIME);
+	vec3 n1 = calculate_normal(VERTEX, wave_amplitude, vec2(1,0), wave_steepness, wave_length, time);
+	vec3 n2 = calculate_normal(VERTEX, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, time);
+	vec3 n3 = calculate_normal(VERTEX, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, time);
 	
 	vec3 d = d1 + d2 + d3;
 	vec3 n = normalize(vec3(0,1,0) + (n1 + n2 + n3));
 	
-	VERTEX = vec3(VERTEX.x + d.x, d.y, VERTEX.z + d.z);
+	VERTEX = vec3(VERTEX.x + d.x, VERTEX.y + d.y, VERTEX.z + d.z);
 	NORMAL = n;
 
 }

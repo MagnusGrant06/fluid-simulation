@@ -14,6 +14,7 @@ shader_parameter/wave_length = 7.5
 shader_parameter/wave_amplitude = 0.5
 shader_parameter/wave_steepness = 0.75
 shader_parameter/visibility = 0.25
+shader_parameter/time = 0.0
 
 [node name="FluidSurface" type="MeshInstance3D" unique_id=856857340]
 mesh = SubResource("PlaneMesh_jjvhh")
