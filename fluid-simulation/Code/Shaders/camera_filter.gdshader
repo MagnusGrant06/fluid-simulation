@@ -1,7 +1,6 @@
 shader_type spatial;
 render_mode unshaded, depth_test_disabled;
 
-uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D depth_texture : hint_depth_texture, filter_linear_mipmap;
 
 uniform float visibility = 0.05;

@@ -2,10 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cyck2qg52o3g2" path="res://Scenes/fluid.tscn" id="1_jjvhh"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
-[ext_resource type="Script" uid="uid://bu42i7twtnk1y" path="res://Scenes/character.gd" id="2_21xkr"]
+[ext_resource type="Script" uid="uid://bu42i7twtnk1y" path="res://Code/Scripts/character.gd" id="2_21xkr"]
 [ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
 [ext_resource type="Shader" uid="uid://d4emdokd56qu2" path="res://Code/Shaders/camera_filter.gdshader" id="3_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
+[ext_resource type="Shader" uid="uid://cji204e1baeju" path="res://Code/Shaders/ground.gdshader" id="7_6bp64"]
+[ext_resource type="Script" uid="uid://cp77fgct61cyl" path="res://Scenes/ground_manager.gd" id="8_344ge"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vfd82"]
 radius = 0.025
@@ -38,7 +40,18 @@ fog_density = 0.0
 [sub_resource type="CylinderMesh" id="CylinderMesh_vfd82"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_k0t4d"]
-size = Vector2(15, 15)
+size = Vector2(10, 10)
+subdivide_width = 50
+subdivide_depth = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+render_priority = 0
+shader = ExtResource("7_6bp64")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/time = 0.0
+shader_parameter/light_direction = Vector3(0, 0, 0)
 
 [sub_resource type="SphereMesh" id="SphereMesh_vfd82"]
 height = 5.854
@@ -100,6 +113,8 @@ mesh = SubResource("CylinderMesh_vfd82")
 [node name="Ground" type="MeshInstance3D" parent="." unique_id=713754668]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -5.4139047, 0)
 mesh = SubResource("QuadMesh_k0t4d")
+surface_material_override/0 = SubResource("ShaderMaterial_21xkr")
+script = ExtResource("8_344ge")
 
 [node name="GroundObj1" type="MeshInstance3D" parent="Ground" unique_id=1565312137]
 transform = Transform3D(0.89159447, 0.452835, 1.9794044e-08, -0.45272982, 0.8913874, -0.021549908, -0.009758567, 0.019213766, 0.9997678, -2.0561733, -4.6204883e-07, -0.33831644)

@@ -6,6 +6,8 @@ extends Control
 @onready var vis_slider : HSlider = $VBoxContainer/VisibilitySlider
 @onready var fluid : Node3D = $"../Fluid"
 @onready var camera_filter : MeshInstance3D = $"../CharacterBody3D/Camera3D/MeshInstance3D"
+@onready var ground : MeshInstance3D = $"../Ground"
+
 var fluid_material : ShaderMaterial
 var filter_material : ShaderMaterial
 
@@ -14,6 +16,10 @@ func _ready() -> void:
 	steep_slider.connect("value_changed", _on_steepness_changed)
 	wavlen_slider.connect("value_changed", _on_wavelength_changed)
 	vis_slider.connect("value_changed", _on_visibility_changed)
+	
+	amp_slider.connect("value_changed", ground._on_amplitude_changed)
+	steep_slider.connect("value_changed", ground._on_steepness_changed)
+	wavlen_slider.connect("value_changed", ground._on_wavelength_changed)
 	
 	fluid_material = fluid.surface.get_active_material(0)
 	filter_material = camera_filter.get_active_material(0)
