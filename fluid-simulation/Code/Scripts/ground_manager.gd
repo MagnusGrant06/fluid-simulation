@@ -40,9 +40,18 @@ func _process(delta: float) -> void:
 
 func _on_amplitude_changed(value : float):
 	ground_material.set_shader_parameter("wave_amplitude", value)
+	obj1_mat.set_shader_parameter("wave_amplitude",value);
+	obj2_mat.set_shader_parameter("wave_amplitude",value);
+	obj3_mat.set_shader_parameter("wave_amplitude",value);
 
 func _on_steepness_changed(value : float):
 	ground_material.set_shader_parameter("wave_steepness", value)
+	obj1_mat.set_shader_parameter("wave_steepness",value);
+	obj2_mat.set_shader_parameter("wave_steepness",value);
+	obj3_mat.set_shader_parameter("wave_steepness",value);
 
 func _on_wavelength_changed(value : float):
 	ground_material.set_shader_parameter("wave_length", value)
+	obj1_mat.set_shader_parameter("wave_length",value);
+	obj2_mat.set_shader_parameter("wave_length",value);
+	obj3_mat.set_shader_parameter("wave_length",value);

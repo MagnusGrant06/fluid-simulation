@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c4mc3walo5kva"]
 
+[ext_resource type="Script" uid="uid://b1std1w2d0b33" path="res://Code/Scripts/main.gd" id="1_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cyck2qg52o3g2" path="res://Scenes/fluid.tscn" id="1_jjvhh"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
 [ext_resource type="Script" uid="uid://bu42i7twtnk1y" path="res://Code/Scripts/character.gd" id="2_21xkr"]
@@ -7,7 +8,7 @@
 [ext_resource type="Shader" uid="uid://d4emdokd56qu2" path="res://Code/Shaders/camera_filter.gdshader" id="3_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
 [ext_resource type="Shader" uid="uid://cji204e1baeju" path="res://Code/Shaders/ground.gdshader" id="7_6bp64"]
-[ext_resource type="Script" uid="uid://cp77fgct61cyl" path="res://Scenes/ground_manager.gd" id="8_344ge"]
+[ext_resource type="Script" uid="uid://cp77fgct61cyl" path="res://Code/Scripts/ground_manager.gd" id="8_344ge"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vfd82"]
 radius = 0.025
@@ -98,9 +99,16 @@ shader_parameter/wave_steepness = 0.75
 shader_parameter/time = 0.0
 shader_parameter/light_direction = Vector3(0, 0, 0)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vfd82"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vfd82"]
+size = Vector3(10, 10, 0.01)
+
 [node name="Main" type="Node3D" unique_id=2027078809]
+script = ExtResource("1_hptm8")
 
 [node name="Fluid" parent="." unique_id=199363850 instance=ExtResource("1_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.039670467, 0)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1234586936]
 transform = Transform3D(0.0289368, 0.5699732, -0.8211535, -0.02007294, 0.82166326, 0.5696196, 0.99937963, 1.2006774e-09, 0.03521734, -6.957302, 3.645554, 1.3098075)
@@ -167,3 +175,9 @@ surface_material_override/0 = SubResource("ShaderMaterial_hptm8")
 transform = Transform3D(1, 0, 0, 0, 0.31822735, -0.94801444, 0, 0.94801444, 0.31822735, 1.0952313, 1.8751601, 0.4654379)
 mesh = SubResource("PrismMesh_vfd82")
 surface_material_override/0 = SubResource("ShaderMaterial_344ge")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground" unique_id=1738842785]
+physics_material_override = SubResource("PhysicsMaterial_vfd82")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=166857420]
+shape = SubResource("BoxShape3D_vfd82")

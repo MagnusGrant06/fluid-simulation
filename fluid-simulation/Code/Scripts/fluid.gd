@@ -1,4 +1,4 @@
-extends Node
+class_name Fluid extends Node
 
 @onready var environment : WorldEnvironment = $"../WorldEnvironment"
 @onready var camera : Camera3D = $"../CharacterBody3D/Camera3D"
@@ -24,10 +24,17 @@ func _process(delta: float) -> void:
 	var material: ShaderMaterial = surface.get_active_material(0)
 	material.set_shader_parameter("time", wave_time)
 
-func _on_surface_area_entered(_body : Node3D):
+#methods to attach / detach the fluid to any floating bodies and check if camera is within water area
+func _on_surface_area_entered(body : Node3D):
+	if(body is Floaty):
+		body.attach_fluid(self)
+	if(body.get_child(1) is not Camera3D): return
 	within_water_area = true
 
-func _on_surface_area_exited(_body : Node3D):
+func _on_surface_area_exited(body : Node3D):
+	if(body is Floaty):
+		body.detach_fluid()
+	if(body.get_child(1) is not Camera3D): return
 	within_water_area = false
 
 #check if given point is above or below water surface taking into account waves

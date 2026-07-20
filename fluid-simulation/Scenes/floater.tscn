@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cyk42l4xbqxq1"]
+
+[ext_resource type="Script" uid="uid://cjf4da25p07bq" path="res://Scenes/floater.gd" id="1_7658v"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vfd82"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vfd82"]
+
+[node name="Floater" type="RigidBody3D" unique_id=1387297196]
+script = ExtResource("1_7658v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1949718983]
+shape = SubResource("SphereShape3D_vfd82")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2120594520]
+mesh = SubResource("SphereMesh_vfd82")

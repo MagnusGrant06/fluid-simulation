@@ -7,7 +7,7 @@ extends CharacterBody3D
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _input(event):
+func _input(event : InputEvent):
 	if event is InputEventMouseMotion:
 		if(Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED):
 			return

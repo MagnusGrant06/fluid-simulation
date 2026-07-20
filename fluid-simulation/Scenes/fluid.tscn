@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bdfi3qtlnt7o" path="res://Code/Scripts/fluid.gd" id="1_rcw30"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vfd82"]
-size = Vector3(10, 20, 10)
+size = Vector3(10, 10.7, 10)
 
 [node name="Fluid" type="Node3D" unique_id=199363850]
 script = ExtResource("1_rcw30")
