@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://cy6dcpy0g2vr5" path="res://Code/Shaders/water.gdshader" id="1_xrqee"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_jjvhh"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_hhhfx"]
 size = Vector2(10, 10)
 subdivide_width = 50
 subdivide_depth = 50
@@ -17,5 +17,5 @@ shader_parameter/visibility = 0.25
 shader_parameter/time = 0.0
 
 [node name="FluidSurface" type="MeshInstance3D" unique_id=856857340]
-mesh = SubResource("PlaneMesh_jjvhh")
+mesh = SubResource("PlaneMesh_hhhfx")
 surface_material_override/0 = SubResource("ShaderMaterial_vfd82")

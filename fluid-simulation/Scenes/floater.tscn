@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cyk42l4xbqxq1"]
 
-[ext_resource type="Script" uid="uid://cjf4da25p07bq" path="res://Scenes/floater.gd" id="1_7658v"]
+[ext_resource type="Script" uid="uid://cjf4da25p07bq" path="res://Code/Scripts/floater.gd" id="1_7658v"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vfd82"]
 

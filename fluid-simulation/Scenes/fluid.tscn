@@ -2,6 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://bd0wdtoa4h004" path="res://Scenes/fluid_surface.tscn" id="1_qr0y5"]
 [ext_resource type="Script" uid="uid://bdfi3qtlnt7o" path="res://Code/Scripts/fluid.gd" id="1_rcw30"]
+[ext_resource type="Shader" uid="uid://bcfdl37u0jgqc" path="res://Code/Shaders/below_water.gdshader" id="3_dygee"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dygee"]
+render_priority = 0
+shader = ExtResource("3_dygee")
+shader_parameter/wave_length = 7.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_steepness = 0.75
+shader_parameter/visibility = 0.25
+shader_parameter/time = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vfd82"]
 size = Vector3(10, 10.7, 10)
@@ -9,7 +19,10 @@ size = Vector3(10, 10.7, 10)
 [node name="Fluid" type="Node3D" unique_id=199363850]
 script = ExtResource("1_rcw30")
 
-[node name="FluidSurface" parent="." unique_id=856857340 instance=ExtResource("1_qr0y5")]
+[node name="AboveSurface" parent="." unique_id=856857340 instance=ExtResource("1_qr0y5")]
+
+[node name="BelowSurface" parent="." unique_id=502419825 instance=ExtResource("1_qr0y5")]
+surface_material_override/0 = SubResource("ShaderMaterial_dygee")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=468638746]
 

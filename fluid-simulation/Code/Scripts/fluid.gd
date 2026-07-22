@@ -2,7 +2,8 @@ class_name Fluid extends Node
 
 @onready var environment : WorldEnvironment = $"../WorldEnvironment"
 @onready var camera : Camera3D = $"../CharacterBody3D/Camera3D"
-@onready var surface : MeshInstance3D = $FluidSurface
+@onready var surface : MeshInstance3D = $AboveSurface
+@onready var below_surface : MeshInstance3D = $BelowSurface
 @onready var surface_area : Area3D =$Area3D
 
 var wavelength : float = 7.5
@@ -21,8 +22,11 @@ func _ready() -> void:
 #manually keep track of time so its consistent between script and shader
 func _process(delta: float) -> void:
 	wave_time += delta
-	var material: ShaderMaterial = surface.get_active_material(0)
-	material.set_shader_parameter("time", wave_time)
+	var top_material: ShaderMaterial = surface.get_active_material(0)
+	top_material.set_shader_parameter("time", wave_time)
+	
+	var below_material : ShaderMaterial = below_surface.get_active_material(0)
+	below_material.set_shader_parameter("time", wave_time)
 
 #methods to attach / detach the fluid to any floating bodies and check if camera is within water area
 func _on_surface_area_entered(body : Node3D):

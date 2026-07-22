@@ -1,5 +1,6 @@
 extends Control
 
+@onready var sun : DirectionalLight3D = $"../DirectionalLight3D"
 @onready var amp_slider : HSlider = $VBoxContainer/AmplitudeSlider
 @onready var steep_slider : HSlider = $VBoxContainer/SteepnessSlider
 @onready var wavlen_slider : HSlider = $VBoxContainer/WavelengthSlider
@@ -23,6 +24,8 @@ func _ready() -> void:
 	
 	fluid_material = fluid.surface.get_active_material(0)
 	filter_material = camera_filter.get_active_material(0)
+	
+	filter_material.set_shader_parameter("sun_direction", -sun.global_transform.basis.z.normalized())
 
 func _on_amplitude_changed(value : float):
 	fluid_material.set_shader_parameter("wave_amplitude", value)
