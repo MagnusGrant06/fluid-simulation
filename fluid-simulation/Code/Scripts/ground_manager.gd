@@ -4,54 +4,34 @@ extends MeshInstance3D
 @onready var obj1 = $"GroundObj1"
 @onready var obj2 = $"GroundObj2"
 @onready var obj3= $"GroundObj3"
-var ground_material : ShaderMaterial
 
-var obj1_mat : ShaderMaterial
-var obj2_mat : ShaderMaterial
-var obj3_mat : ShaderMaterial
+var ground_material : ShaderMaterial = ShaderMaterial.new()
 var time : float
 
 func _ready() -> void:
-	ground_material = self.get_surface_override_material(0)
+	ground_material.shader = load("res://Code/Shaders/ground.gdshader")
 	
-	obj1_mat = obj1.get_surface_override_material(0)
-	obj2_mat = obj2.get_surface_override_material(0)
-	obj3_mat = obj3.get_surface_override_material(0)
+	#share same shader across all ground objects, as we want the same effect on all
+	self.material_override = ground_material
+	obj1.material_override = ground_material
+	obj2.material_override = ground_material
+	obj3.material_override = ground_material
 	
-	var caustic_tex = load("res://caustic_texture.jpg")
+	var caustic_tex = load("res://assets/caustic_texture.jpg")
 	ground_material.set_shader_parameter("caustic_texture", caustic_tex)
 	ground_material.set_shader_parameter("light_direction", -caustic_light_source.global_transform.basis.z.normalized())
-	
-	obj1_mat.set_shader_parameter("caustic_texture", caustic_tex)
-	obj1_mat.set_shader_parameter("light_direction", -caustic_light_source.global_transform.basis.z.normalized())
-	
-	obj2_mat.set_shader_parameter("caustic_texture", caustic_tex)
-	obj2_mat.set_shader_parameter("light_direction", -caustic_light_source.global_transform.basis.z.normalized())
-	
-	obj3_mat.set_shader_parameter("caustic_texture", caustic_tex)
-	obj3_mat.set_shader_parameter("light_direction", -caustic_light_source.global_transform.basis.z.normalized())
 
+#set time accurately across anything to do with waves
 func _process(delta: float) -> void:
 	time += delta
 	ground_material.set_shader_parameter("time", time)
-	obj1_mat.set_shader_parameter("time", time)
-	obj2_mat.set_shader_parameter("time", time)
-	obj3_mat.set_shader_parameter("time", time)
 
+#set values using sliders
 func _on_amplitude_changed(value : float):
 	ground_material.set_shader_parameter("wave_amplitude", value)
-	obj1_mat.set_shader_parameter("wave_amplitude",value);
-	obj2_mat.set_shader_parameter("wave_amplitude",value);
-	obj3_mat.set_shader_parameter("wave_amplitude",value);
 
 func _on_steepness_changed(value : float):
 	ground_material.set_shader_parameter("wave_steepness", value)
-	obj1_mat.set_shader_parameter("wave_steepness",value);
-	obj2_mat.set_shader_parameter("wave_steepness",value);
-	obj3_mat.set_shader_parameter("wave_steepness",value);
 
 func _on_wavelength_changed(value : float):
 	ground_material.set_shader_parameter("wave_length", value)
-	obj1_mat.set_shader_parameter("wave_length",value);
-	obj2_mat.set_shader_parameter("wave_length",value);
-	obj3_mat.set_shader_parameter("wave_length",value);

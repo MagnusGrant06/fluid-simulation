@@ -7,6 +7,7 @@ extends CharacterBody3D
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+#simples wasd and mouse movement for displaying scene easily
 func _input(event : InputEvent):
 	if event is InputEventMouseMotion:
 		if(Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED):
@@ -22,7 +23,6 @@ func _input(event : InputEvent):
 func _physics_process(delta):
 	var input_dir = Input.get_vector("a", "d", "w", "s")
 	var move_axis = 0.0
-
 	var direction = (transform.basis * Vector3(input_dir.x, move_axis, input_dir.y)).normalized()
 	
 	velocity = velocity.lerp(direction * speed, acceleration * delta)

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cyck2qg52o3g2" path="res://Scenes/fluid.tscn" id="1_jjvhh"]
 [ext_resource type="Script" uid="uid://8bp2i13168dj" path="res://Code/Scripts/camera_3d.gd" id="2_8gbba"]
 [ext_resource type="Script" uid="uid://bu42i7twtnk1y" path="res://Code/Scripts/character.gd" id="2_21xkr"]
-[ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
+[ext_resource type="Texture2D" uid="uid://c6545y4sqhfwp" path="res://assets/citrus_orchard_road_puresky_4k.exr" id="3_8gbba"]
 [ext_resource type="Shader" uid="uid://d4emdokd56qu2" path="res://Code/Shaders/camera_filter.gdshader" id="3_kry3j"]
 [ext_resource type="PackedScene" uid="uid://bslun5b34sjgb" path="res://Scenes/wave_controller.tscn" id="4_jjvhh"]
 [ext_resource type="Shader" uid="uid://cji204e1baeju" path="res://Code/Shaders/ground.gdshader" id="7_6bp64"]
@@ -20,6 +20,8 @@ size = Vector2(1.3, 0.7)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jjvhh"]
 render_priority = 0
 shader = ExtResource("3_kry3j")
+shader_parameter/visibility = 0.25
+shader_parameter/sun_direction = Vector3(0, 0, 0)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xrqee"]
 panorama = ExtResource("3_8gbba")

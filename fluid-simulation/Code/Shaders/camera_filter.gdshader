@@ -7,7 +7,7 @@ uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 uniform float visibility = 0.05;
 uniform vec3 sun_direction;
 
-const int NUM_SAMPLES = 50;
+const int NUM_SAMPLES = 60;
 const float density = 0.6;
 const float decay = 0.99;
 const float exposure = 0.1;
@@ -70,18 +70,22 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	
+	//use beer lampbert with the depth of each pixel to get light absorption
 	float depth = calculate_pixel_depth(SCREEN_UV, VERTEX, INV_PROJECTION_MATRIX);
 	float transmittance = exp(-depth * visibility);
 	
+	//sample screen buffer to allow color to pass through filter
 	vec3 ocean_color = vec3(0.2588, 0.4537, 0.9608);
 	float depth_factor = clamp(1.0 - transmittance,0.0,1.0);
 	vec3 screen_color = texture(screen_texture, SCREEN_UV).rgb;
 	
 	vec3 tint_color =  mix(screen_color, ocean_color, depth_factor);
 	
+	//calculate god rays in relation to sun position and camera position then mix colors
 	vec2 light_pos = calculate_2d_light_pos(VIEW_MATRIX, PROJECTION_MATRIX, CAMERA_POSITION_WORLD, sun_direction);
 	vec3 god_ray_col = compute_god_ray(SCREEN_UV, light_pos);
-	vec3 final = tint_color + god_ray_col * 0.5;
+	vec3 final = tint_color + god_ray_col * 0.4;
 	
 	ALBEDO = final;
 	ALPHA = 0.85;

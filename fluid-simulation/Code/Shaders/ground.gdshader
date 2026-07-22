@@ -19,20 +19,25 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	//fragment shader uses transformed version of true vertex, so convert back
 	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX,1.0)).xyz;
+	
+	//calculate the wave at the current ground position to use in caustic texture
 	vec3 normal = calculate_summed_waves_normal(world_pos, wave_amplitude, wave_steepness, wave_length, time);
 	vec3 ray_dir = refract(light_direction, normal, air_index / water_index);
 	vec3 ray_pos = calculate_summed_waves_offset(world_pos, wave_amplitude, wave_steepness, wave_length, time);
 	
+	//calculate ray intersection with ground plane (assumes plane is facing up)
 	float t = (world_pos.y - ray_pos.y) / ray_dir.y;
 	vec3 intersection = ray_pos + ray_dir *t;
 	
+	//sample caustic texture at intersection point after conversion
 	vec2 sample_pos = intersection.xz;
 	vec2 uv = ((sample_pos / 10.0) + 0.5) * 2.0;
 	vec4 caustic_col = texture(caustic_texture, uv);
 	
+	//basic ground color then mix with caustic sample color
 	vec3 ground_color = vec3(0.76, 0.70, 0.50);
-	
 	ALBEDO = mix(ground_color, caustic_col.rgb, 0.5);
 }
 

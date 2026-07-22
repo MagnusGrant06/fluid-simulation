@@ -12,6 +12,7 @@ extends Control
 var fluid_material : ShaderMaterial
 var filter_material : ShaderMaterial
 
+#manually connect methods to signals as i dont like the gui
 func _ready() -> void:
 	amp_slider.connect("value_changed", _on_amplitude_changed)
 	steep_slider.connect("value_changed", _on_steepness_changed)
@@ -27,6 +28,7 @@ func _ready() -> void:
 	
 	filter_material.set_shader_parameter("sun_direction", -sun.global_transform.basis.z.normalized())
 
+#straightforward methods to change wave paramaters for presentation 
 func _on_amplitude_changed(value : float):
 	fluid_material.set_shader_parameter("wave_amplitude", value)
 	fluid.amplitude = value
