@@ -6,6 +6,7 @@ uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 
 uniform float visibility = 0.05;
 uniform vec3 sun_direction;
+uniform float god_ray_strength = 0.4;
 
 const int NUM_SAMPLES = 60;
 const float density = 0.6;
@@ -85,7 +86,7 @@ void fragment() {
 	//calculate god rays in relation to sun position and camera position then mix colors
 	vec2 light_pos = calculate_2d_light_pos(VIEW_MATRIX, PROJECTION_MATRIX, CAMERA_POSITION_WORLD, sun_direction);
 	vec3 god_ray_col = compute_god_ray(SCREEN_UV, light_pos);
-	vec3 final = tint_color + god_ray_col * 0.4;
+	vec3 final = tint_color + god_ray_col * god_ray_strength;
 	
 	ALBEDO = final;
 	ALPHA = 0.85;

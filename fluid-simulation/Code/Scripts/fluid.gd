@@ -65,6 +65,7 @@ func get_current_wave_height(position : Vector3, wave_amplitude : float, wave_st
 	var d1 : Vector3 = calculate_wave_offset(position, wave_amplitude, Vector2(1,0), wave_steepness, wave_length);
 	var d2 : Vector3 = calculate_wave_offset(position, wave_amplitude*1.5, Vector2(0,1), wave_steepness*0.75, wave_length*1.5)
 	var d3 : Vector3 = calculate_wave_offset(position, wave_amplitude*0.75, Vector2(0.5,0.5), wave_steepness*1.5, wave_length*0.5)
+	var d4 : Vector3 = calculate_wave_offset(position, wave_amplitude*0.33, Vector2(-0.5, -0.5), wave_steepness*1.5, wave_length * 0.25)
 	
-	var d : Vector3 = d1 + d2 + d3
+	var d : Vector3 = d1 + d2 + d3 + d4
 	return d.y

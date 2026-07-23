@@ -22,6 +22,7 @@ script = ExtResource("1_rcw30")
 [node name="AboveSurface" parent="." unique_id=856857340 instance=ExtResource("1_qr0y5")]
 
 [node name="BelowSurface" parent="." unique_id=502419825 instance=ExtResource("1_qr0y5")]
+ignore_occlusion_culling = true
 surface_material_override/0 = SubResource("ShaderMaterial_dygee")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=468638746]

@@ -34,8 +34,9 @@ vec3 calculate_summed_waves_offset(vec3 vertex, float wave_amplitude, float wave
 	vec3 d1 = calculate_offset(vertex, wave_amplitude, vec2(1,0), wave_steepness, wave_length, t);
 	vec3 d2 = calculate_offset(vertex, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, t);
 	vec3 d3 = calculate_offset(vertex, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, t);
+	vec3 d4 = calculate_offset(vertex, wave_amplitude*0.33, vec2(-0.5, -0.5), wave_steepness*1.5, wave_length * 0.25, t);
 	
-	vec3 d = d1 + d2 + d3;
+	vec3 d = d1 + d2 + d3 + d4;
 	return vec3(vertex.x + d.x, vertex.y + d.y, vertex.z + d.z);
 }
 
@@ -44,7 +45,8 @@ vec3 calculate_summed_waves_normal(vec3 vertex, float wave_amplitude, float wave
 	vec3 n1 = calculate_normal(vertex, wave_amplitude, vec2(1,0), wave_steepness, wave_length, t);
 	vec3 n2 = calculate_normal(vertex, wave_amplitude*1.5, vec2(0,1), wave_steepness*0.75, wave_length*1.5, t);
 	vec3 n3 = calculate_normal(vertex, wave_amplitude*0.75, vec2(0.5,0.5), wave_steepness*1.5, wave_length*0.5, t);
-	vec3 n = normalize(vec3(0,1,0) + (n1 + n2 + n3));
+	vec3 n4 = calculate_normal(vertex, wave_amplitude*0.33, vec2(-0.5, -0.5), wave_steepness*1.5, wave_length * 0.25, t);
+	vec3 n = normalize(vec3(0,1,0) + (n1 + n2 + n3 + n4));
 	return n;
 }
 
